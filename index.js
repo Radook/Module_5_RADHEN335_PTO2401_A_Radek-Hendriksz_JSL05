@@ -11,7 +11,18 @@ const songs = [
     { title: "Come and Get Your Love", artist: "Redbone", genre: "Rock" },
     { title: "I'm Not in Love", artist: "10cc", genre: "Pop" },
     { title: "Fooled Around and Fell in Love", artist: "Elvin Bishop", genre: "Rock" },
-    // Feel free to add even more songs
+    { title: "Symphony No. 9 in D Minor, Op. 125", artist: "Ludwig van Beethoven", genre: "Classical" },
+    { title: "The Four Seasons", artist: "Antonio Vivaldi", genre: "Classical" },
+    { title: "Clair de Lune", artist: "Claude Debussy", genre: "Classical" },
+    { title: "Super Freak", artist: "Rick James", genre: "Classical" },
+    { title: "Swan Lake", artist: "Pyotr Ilyich Tchaikovsky", genre: "Funk" },
+    { title: "Give Up the Funk (Tear the Roof off the Sucker)", artist: "Parliament", genre: "Funk" },
+    { title: "Funky Town", artist: "Lipps Inc.", genre: "Funk" },
+    { title: "All Night Forever", artist: "TWRP", genre: "Funk" },
+    { title: "Enter Sandman", artist: "Metallica", genre: "Metal" },
+    { title: "Iron Man", artist: "Black Sabbath", genre: "Metal" },
+    { title: "Breaking the Law", artist: "Judas Priest", genre: "Metal" },
+    { title: "Ace of Spades", artist: "Motörhead", genre: "Metal" },
 ];
 
 
@@ -19,20 +30,74 @@ const songs = [
 const guardians = {
     "Star-Lord": "Rock",
     "Gamora": "Pop",
-    "Star-Lord": "Rock",
-    "Gamora": "Pop",
-    "Star-Lord": "Rock"
-    // Add preferences for Drax, Rocket, and Groot
+    "Groot": "Funk",
+    "Rocket": "Metal",
+    "Drax": "Classical"
 };
 
 // Function to generate playlist based on preferred genre
 function generatePlaylist(guardians, songs) {
-    // Use the map() function to create playlists for each Guardian
-    // Your code here
+    // Use map() to create playlists for each Guardian
+    const playlists = {};
+    
+    // Loop through each guardian
+    Object.keys(guardians).forEach(guardian => {
+        const preferredGenre = guardians[guardian];
+        
+        // Filter songs by preferred genre
+        const playlist = songs.filter(song => song.genre === preferredGenre);
+        
+        // Map to create playlist object with titles and artists
+        playlists[guardian] = {
+            name: `${guardian}'s Playlist`,
+            songs: playlist.map(song => ({
+                title: song.title,
+                artist: song.artist
+            }))
+        };
+    });
+    
+    return playlists;
+}
 
+// Function to display playlists on the webpage
+function displayPlaylists(playlists) {
+    const playlistsContainer = document.getElementById('playlists');
+    
+    // Loop through each Guardian's playlist and create HTML elements
+    Object.keys(playlists).forEach(guardian => {
+        const playlist = playlists[guardian];
+        
+        // Create playlist container
+        const playlistDiv = document.createElement('div');
+        playlistDiv.classList.add('playlist');
+        
+        // Create heading for Guardian's playlist
+        const heading = document.createElement('h2');
+        heading.textContent = playlist.name;
+        playlistDiv.appendChild(heading);
+        
+        // Create list of songs
+        const songList = document.createElement('ul');
+        playlist.songs.forEach(song => {
+            const songItem = document.createElement('li');
+            songItem.classList.add('song');
+            
+            const songTitle = document.createElement('span');
+            songTitle.classList.add('song-title');
+            songTitle.textContent = `${song.title} by ${song.artist}`;
+            songItem.appendChild(songTitle);
+            
+            songList.appendChild(songItem);
+        });
+        
+        playlistDiv.appendChild(songList);
+        
+        // Append playlist to container
+        playlistsContainer.appendChild(playlistDiv);
+    });
 }
 
 // Call generatePlaylist and display the playlists for each Guardian
-generatePlaylist(guardians, songs);
-
-
+const playlistsData = generatePlaylist(guardians, songs);
+displayPlaylists(playlistsData);
