@@ -5,6 +5,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    
 }
 
 h1 {
@@ -25,15 +26,18 @@ h1 {
 
 .song {
     margin: 10px 0; /* Increased margin */
+    list-style-type: none;  /* Removed the bullets */
 }
 
 .song-title {
     font-weight: bold;
     color: #FFD700; /* Gold color for song titles */
     text-decoration: underline; /* Underline effect for song titles */
+   
 }
 
 .song-title:hover {
     text-decoration: none; /* Remove underline on hover */
     color: #00FF00; /* Green color on hover */
+    
 }

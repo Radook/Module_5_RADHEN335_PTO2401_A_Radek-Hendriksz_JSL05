@@ -44,7 +44,7 @@ function generatePlaylist(guardians, songs) {
     Object.keys(guardians).forEach(guardian => {
         const preferredGenre = guardians[guardian];
         
-        // Filter songs by preferred genre
+        // Filter genre
         const playlist = songs.filter(song => song.genre === preferredGenre);
         
         // Map to create playlist object with titles and artists
@@ -60,33 +60,40 @@ function generatePlaylist(guardians, songs) {
     return playlists;
 }
 
-// Function to display playlists on the webpage
+// CSS show playlists
 function displayPlaylists(playlists) {
     const playlistsContainer = document.getElementById('playlists');
     
-    // Loop through each Guardian's playlist and create HTML elements
+    // Loop Guardian's playlist
     Object.keys(playlists).forEach(guardian => {
         const playlist = playlists[guardian];
         
-        // Create playlist container
+        // Playlist container
         const playlistDiv = document.createElement('div');
         playlistDiv.classList.add('playlist');
         
-        // Create heading for Guardian's playlist
+        // Guardians Playlist
         const heading = document.createElement('h2');
         heading.textContent = playlist.name;
         playlistDiv.appendChild(heading);
         
-        // Create list of songs
+        // Creates the list
         const songList = document.createElement('ul');
+        // songList.classList.add('song-list'); // Add class for styling
+        
         playlist.songs.forEach(song => {
             const songItem = document.createElement('li');
             songItem.classList.add('song');
             
             const songTitle = document.createElement('span');
             songTitle.classList.add('song-title');
-            songTitle.textContent = `${song.title} by ${song.artist}`;
+            songTitle.textContent = `${song.title}`;
             songItem.appendChild(songTitle);
+            
+            //Artist
+            const artistName = document.createElement('span');
+            artistName.textContent = ` by ${song.artist}`;
+            songItem.appendChild(artistName);
             
             songList.appendChild(songItem);
         });
